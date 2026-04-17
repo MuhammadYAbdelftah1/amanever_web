@@ -84,35 +84,35 @@ const Header: React.FC<HeaderProps> = ({ onOpenBookings, onOpenDoctorPlatform })
     <header 
       className={`fixed top-0 inset-x-0 z-50 transition-all duration-500 ease-in-out ${
         isScrolled 
-          ? 'bg-white/95 backdrop-blur-xl shadow-md py-2' 
-          : 'bg-transparent py-3 md:py-6'
+          ? 'bg-white/95 backdrop-blur-xl shadow-md py-1.5 md:py-2' 
+          : 'bg-transparent py-2 md:py-4'
       }`}
     >
       <div className="container mx-auto px-3 sm:px-4 lg:px-6">
-        <div className="flex justify-between items-center gap-2">
+        <div className="flex justify-between items-center gap-1 sm:gap-2">
           {/* Logo Section - Optimized for all screens */}
           <div 
-            className="flex items-center gap-2 sm:gap-3 group cursor-pointer flex-shrink-0"
+            className="flex items-center gap-1.5 sm:gap-2 md:gap-3 group cursor-pointer flex-shrink-0"
             onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
           >
             <div className={`relative transition-all duration-500 transform group-hover:scale-105 flex-shrink-0 ${
-              isScrolled ? 'w-10 h-10 sm:w-12 sm:h-12 md:w-14 md:h-14' : 'w-12 h-12 sm:w-16 sm:h-16 md:w-20 md:h-20'
+              isScrolled ? 'w-9 h-9 sm:w-10 sm:h-10 md:w-12 md:h-12' : 'w-10 h-10 sm:w-12 sm:h-12 md:w-16 md:h-16'
             }`}>
               <Logo className="w-full h-full drop-shadow-xl" />
               <div className="absolute inset-0 bg-[#4d8080]/10 rounded-full blur-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
             </div>
-            <div className="flex flex-col min-w-0 max-w-[140px] sm:max-w-[200px] md:max-w-[280px] lg:max-w-none">
+            <div className="flex flex-col min-w-0 max-w-[120px] sm:max-w-[160px] md:max-w-[220px] lg:max-w-[280px] xl:max-w-none">
               <span className={`font-black text-[#4d8080] tracking-tight leading-[1.1] transition-all duration-500 ${
                 isScrolled 
-                  ? 'text-[10px] sm:text-sm md:text-base lg:text-xl' 
-                  : 'text-xs sm:text-base md:text-xl lg:text-2xl'
+                  ? 'text-[9px] sm:text-xs md:text-sm lg:text-base xl:text-lg' 
+                  : 'text-[10px] sm:text-sm md:text-base lg:text-lg xl:text-xl'
               }`}>
                 {t('header.brandAr')}
               </span>
               <span className={`font-bold text-gray-400 uppercase tracking-tight transition-all duration-500 truncate ${
                 isScrolled 
-                  ? 'text-[6px] sm:text-[8px] md:text-[9px] lg:text-[10px]' 
-                  : 'text-[7px] sm:text-[9px] md:text-[10px] lg:text-xs'
+                  ? 'text-[5px] sm:text-[7px] md:text-[8px] lg:text-[9px]' 
+                  : 'text-[6px] sm:text-[8px] md:text-[9px] lg:text-[10px]'
               }`}>
                 {t('header.brandEn')}
               </span>
@@ -120,13 +120,13 @@ const Header: React.FC<HeaderProps> = ({ onOpenBookings, onOpenDoctorPlatform })
           </div>
 
           {/* Desktop Nav - Show from lg screens */}
-          <nav className="hidden lg:flex items-center gap-x-1 xl:gap-x-2 2xl:gap-x-3">
+          <nav className="hidden lg:flex items-center gap-x-0.5 xl:gap-x-1 2xl:gap-x-2">
             {navLinks.map((link) => (
               <a
                 key={link.id}
                 href={`#${link.id}`}
                 onClick={(e) => handleNavClick(e, link.id)}
-                className={`font-black transition-all duration-300 text-[9px] xl:text-[10px] 2xl:text-xs hover:text-[#4d8080] relative group whitespace-nowrap px-1 ${
+                className={`font-black transition-all duration-300 text-[8px] xl:text-[9px] 2xl:text-[10px] hover:text-[#4d8080] relative group whitespace-nowrap px-0.5 xl:px-1 ${
                   isScrolled ? 'text-gray-600' : 'text-gray-800' 
                 }`}
                 style={{ 
@@ -141,18 +141,18 @@ const Header: React.FC<HeaderProps> = ({ onOpenBookings, onOpenDoctorPlatform })
           </nav>
 
           {/* Actions - Responsive */}
-          <div className="hidden lg:flex items-center gap-1 xl:gap-2 2xl:gap-3 flex-shrink-0">
+          <div className="hidden lg:flex items-center gap-1 xl:gap-1.5 2xl:gap-2 flex-shrink-0">
             {/* Language Switcher Dropdown */}
             <div className="relative">
               <button 
                 onClick={() => setIsLangMenuOpen(!isLangMenuOpen)}
-                className={`flex items-center gap-1 px-2 xl:px-3 py-1.5 xl:py-2 rounded-xl font-bold text-[9px] xl:text-xs transition-all ${
+                className={`flex items-center gap-1 px-1.5 xl:px-2 py-1 xl:py-1.5 rounded-xl font-bold text-[8px] xl:text-[9px] transition-all ${
                   isScrolled 
                     ? 'text-gray-600 hover:bg-gray-100' 
                     : 'text-white hover:bg-white/10'
                 }`}
               >
-                <Globe size={14} className="xl:w-4 xl:h-4" />
+                <Globe size={12} className="xl:w-3.5 xl:h-3.5" />
                 <span className="hidden xl:inline">{currentLanguage.flag} {currentLanguage.name}</span>
                 <span className="xl:hidden">{currentLanguage.flag}</span>
               </button>
@@ -175,14 +175,14 @@ const Header: React.FC<HeaderProps> = ({ onOpenBookings, onOpenDoctorPlatform })
               )}
             </div>
 
-            <button className={`px-2 xl:px-4 2xl:px-5 py-1.5 xl:py-2 rounded-full border font-bold text-[9px] xl:text-[10px] 2xl:text-xs transition-all whitespace-nowrap ${
+            <button className={`px-2 xl:px-3 2xl:px-4 py-1 xl:py-1.5 rounded-full border font-bold text-[8px] xl:text-[9px] 2xl:text-[10px] transition-all whitespace-nowrap ${
               isScrolled 
                 ? 'border-[#4d8080] text-[#4d8080] hover:bg-teal-50' 
                 : 'border-white/40 text-white hover:bg-white/10 backdrop-blur-sm'
             }`}>
               {t('header.login')}
             </button>
-            <button className="px-3 xl:px-5 2xl:px-6 py-1.5 xl:py-2 rounded-full bg-[#4d8080] text-white font-bold text-[9px] xl:text-[10px] 2xl:text-xs hover:bg-[#3d6666] transition-all shadow-lg shadow-teal-900/20 whitespace-nowrap">
+            <button className="px-2.5 xl:px-4 2xl:px-5 py-1 xl:py-1.5 rounded-full bg-[#4d8080] text-white font-bold text-[8px] xl:text-[9px] 2xl:text-[10px] hover:bg-[#3d6666] transition-all shadow-lg shadow-teal-900/20 whitespace-nowrap">
               {t('header.subscribe')}
             </button>
           </div>
