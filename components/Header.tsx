@@ -13,6 +13,7 @@ const Header: React.FC<HeaderProps> = ({ onOpenBookings, onOpenDoctorPlatform })
   const { t, i18n } = useTranslation();
   const [isOpen, setIsOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
+  const [isLangMenuOpen, setIsLangMenuOpen] = useState(false);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -23,9 +24,17 @@ const Header: React.FC<HeaderProps> = ({ onOpenBookings, onOpenDoctorPlatform })
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  const toggleLanguage = () => {
-    const newLang = i18n.language === 'ar' ? 'en' : 'ar';
-    i18n.changeLanguage(newLang);
+  const languages = [
+    { code: 'ar', name: 'العربية', flag: '🇸🇦' },
+    { code: 'en', name: 'English', flag: '🇬🇧' },
+    { code: 'ur', name: 'اردو', flag: '🇵🇰' }
+  ];
+
+  const currentLanguage = languages.find(lang => lang.code === i18n.language) || languages[0];
+
+  const changeLanguage = (langCode: string) => {
+    i18n.changeLanguage(langCode);
+    setIsLangMenuOpen(false);
   };
 
   const navLinks = [
@@ -129,18 +138,37 @@ const Header: React.FC<HeaderProps> = ({ onOpenBookings, onOpenDoctorPlatform })
 
           {/* Actions */}
           <div className="hidden xl:flex items-center gap-2 2xl:gap-4 shrink-0">
-            {/* Language Switcher */}
-            <button 
-              onClick={toggleLanguage}
-              className={`flex items-center gap-2 px-3 py-2 rounded-xl font-bold text-xs transition-all ${
-                isScrolled 
-                  ? 'text-gray-600 hover:bg-gray-100' 
-                  : 'text-white hover:bg-white/10'
-              }`}
-            >
-              <Globe size={16} />
-              {i18n.language === 'ar' ? 'English' : 'العربية'}
-            </button>
+            {/* Language Switcher Dropdown */}
+            <div className="relative">
+              <button 
+                onClick={() => setIsLangMenuOpen(!isLangMenuOpen)}
+                className={`flex items-center gap-2 px-3 py-2 rounded-xl font-bold text-xs transition-all ${
+                  isScrolled 
+                    ? 'text-gray-600 hover:bg-gray-100' 
+                    : 'text-white hover:bg-white/10'
+                }`}
+              >
+                <Globe size={16} />
+                <span>{currentLanguage.flag} {currentLanguage.name}</span>
+              </button>
+              
+              {isLangMenuOpen && (
+                <div className="absolute top-full mt-2 right-0 bg-white rounded-xl shadow-xl border border-gray-100 py-2 min-w-[150px] z-50">
+                  {languages.map((lang) => (
+                    <button
+                      key={lang.code}
+                      onClick={() => changeLanguage(lang.code)}
+                      className={`w-full px-4 py-2 text-left hover:bg-gray-50 transition-colors flex items-center gap-2 ${
+                        i18n.language === lang.code ? 'bg-teal-50 text-[#4d8080] font-bold' : 'text-gray-700'
+                      }`}
+                    >
+                      <span>{lang.flag}</span>
+                      <span className="text-sm">{lang.name}</span>
+                    </button>
+                  ))}
+                </div>
+              )}
+            </div>
 
             <button className={`px-4 2xl:px-6 py-2 rounded-full border font-bold text-[11px] 2xl:text-sm transition-all whitespace-nowrap ${
               isScrolled 
@@ -156,14 +184,33 @@ const Header: React.FC<HeaderProps> = ({ onOpenBookings, onOpenDoctorPlatform })
 
           {/* Mobile Menu Toggle */}
           <div className="xl:hidden flex items-center gap-1 sm:gap-2">
-            <button 
-              onClick={toggleLanguage}
-              className={`p-1.5 sm:p-2 rounded-xl transition-colors ${
-                isScrolled ? 'text-gray-600 bg-gray-50' : 'text-white bg-white/20 backdrop-blur-md'
-              }`}
-            >
-              <Globe size={18} className="sm:w-5 sm:h-5" />
-            </button>
+            <div className="relative">
+              <button 
+                onClick={() => setIsLangMenuOpen(!isLangMenuOpen)}
+                className={`p-1.5 sm:p-2 rounded-xl transition-colors ${
+                  isScrolled ? 'text-gray-600 bg-gray-50' : 'text-white bg-white/20 backdrop-blur-md'
+                }`}
+              >
+                <Globe size={18} className="sm:w-5 sm:h-5" />
+              </button>
+              
+              {isLangMenuOpen && (
+                <div className="absolute top-full mt-2 right-0 bg-white rounded-xl shadow-xl border border-gray-100 py-2 min-w-[130px] z-50">
+                  {languages.map((lang) => (
+                    <button
+                      key={lang.code}
+                      onClick={() => changeLanguage(lang.code)}
+                      className={`w-full px-3 py-2 text-left hover:bg-gray-50 transition-colors flex items-center gap-2 ${
+                        i18n.language === lang.code ? 'bg-teal-50 text-[#4d8080] font-bold' : 'text-gray-700'
+                      }`}
+                    >
+                      <span>{lang.flag}</span>
+                      <span className="text-xs">{lang.name}</span>
+                    </button>
+                  ))}
+                </div>
+              )}
+            </div>
             <button 
               className={`p-1.5 sm:p-2 rounded-xl transition-colors ${
                 isScrolled ? 'text-gray-600 bg-gray-50' : 'text-white bg-white/20 backdrop-blur-md'
