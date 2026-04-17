@@ -767,7 +767,12 @@ i18n
   .use(initReactI18next)
   .init({
     resources,
+    lng: 'ar', // Set Arabic as the default language
     fallbackLng: 'ar',
+    detection: {
+      order: ['localStorage', 'navigator'],
+      caches: ['localStorage']
+    },
     interpolation: {
       escapeValue: false
     }
